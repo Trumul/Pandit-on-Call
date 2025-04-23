@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Pandit</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Book a Pandit</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="booking.html">Book Now</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Booking Form</h2>
+            <form id="booking-form">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+                <label for="puja-type">Type of Puja:</label>
+                <input type="text" id="puja-type" name="puja-type" required>
+                <button type="button" onclick="payNow()">Pay & Book</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Pandit on Call. All rights reserved.</p>
+    </footer>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        function payNow() {
+            var options = {
+                "key": "YOUR_RAZORPAY_KEY",
+                "amount": "50000", // example: Rs 500
+                "currency": "INR",
+                "name": "Pandit on Call",
+                "description": "Puja Booking Fee",
+                "handler": function (response){
+                    alert("Payment successful! ID: " + response.razorpay_payment_id);
+                },
+                "prefill": {
+                    "name": document.getElementById("name").value,
+                    "contact": document.getElementById("phone").value
+                },
+                "theme": {
+                    "color": "#F37254"
+                }
+            };
+            var rzp = new Razorpay(options);
+            rzp.open();
+        }
+    </script>
+</body>
+</html>
